@@ -2,6 +2,9 @@ FROM ubuntu:18.04
 
 VOLUME [ "/source" ]
 
+######################################################
+###############      MXE       #######################
+######################################################
 RUN apt-get update
 RUN apt-get --yes install \
     apt-utils \
@@ -56,6 +59,9 @@ RUN cd /opt/mxe && make libstring-utils
 
 ENV PATH=/opt/mxe/usr/bin:$PATH
 
+######################################################
+#############      String-utils     ##################
+######################################################
 RUN git clone https://github.com/crocarneiro/string-utils.git
 RUN cd string-utils && autoreconf --install
 RUN cd string-utils && ./configure
@@ -65,8 +71,20 @@ RUN cd string-utils && make install
 RUN apt-get update
 RUN apt-get --yes install openssh-server
 
+######################################################
+#################      cJSON      ####################
+######################################################
 RUN git clone https://github.com/DaveGamble/cJSON.git
 RUN cd cJSON && make
 RUN cd cJSON && make install
 
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+######################################################
+##########     Libwatson-translate    ################
+######################################################
+RUN git clone https://github.com/crocarneiro/libwatson-translate.git
+RUN cd libwatson-translate && autoreconf --install
+RUN cd libwatson-translate && ./configure
+RUN cd libwatson-translate && make
+RUN cd libwatson-translate && make install
