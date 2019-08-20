@@ -52,10 +52,13 @@ RUN apt-get --yes install \
     xz-utils
 
 RUN git clone https://github.com/crocarneiro/mxe.git
+RUN git pull
 RUN mv mxe/ /opt/mxe
 RUN cd /opt/mxe && make cc
 RUN cd /opt/mxe && make curl
 RUN cd /opt/mxe && make libstring-utils
+RUN cd /opt/mxe && make cjson
+RUN cd /opt/mxe && make libwatson-translate
 
 ENV PATH=/opt/mxe/usr/bin:$PATH
 
