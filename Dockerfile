@@ -53,8 +53,8 @@ RUN apt-get --yes install \
 
 RUN git clone https://github.com/crocarneiro/mxe.git
 RUN mv mxe/ /opt/mxe
-RUN cd /opt/mxe && git pull \
-    cc \
+RUN cd /opt/mxe && git pull
+RUN cd /opt/mxe && make cc \
     curl \
     libstring-utils \
     cjson \
